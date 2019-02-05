@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sumo Logic Content Parser</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="yam.js"></script>
+<script type="text/javascript" src="sumoCode.js"></script>
+</head>
+<body onload="init()">
+<ul id="yam">
+	<span>Sumo Logic Content Parser:</span>
+	<li id="yam_importdata">Import Data</li>
+	<li id="yam_fields">Field Summaries</li>
+	<li id="yam_queries">Query Fields</li>
+	<li id="yam_compares">Message Check</li>
+	<span class="spacer"></span>
+	<li id="yam_help">Help</li>
+	<li id="yam_reload">Reload Page</li>
+</ul>
+<input type="file" id="file" style="display:none"/>
+<div id="content">
+	<section class="instructionsSection">
+		<h1>Experienced Users</h1>
+		<dl>
+			<dd>Click this button: <button onclick="chooseFiles();">Import Data</button></dd>
+		</dl>
+		<h1>New Users</h1>
+		<h2 class="instructionStep" onclick="toggleSiblingDisplay(this)"><span>▼</span> <span class="linkish">Export the JSON content for your Sumo Logic item to a file</span></h2>
+		<ol>
+			<li>Login to the Sumo Logic app</li>
+			<li>Locate your desired item in either the <span class="svgLibrary">Library</span> or your <span class="svgPersonalFolder">Personal folder</span></li>
+			<ul>
+				<li>The <span class="svgLibrary">Library</span> can be found as an item in menu on the left or in a tab at the top of the window</li>
+				<li>Your <span class="svgPersonalFolder">Personal folder</span> can be found as an item in menu on the left or in the <span class="svgLibrary">Library</span> itself</li>
+				<li>The item can either be a saved search, dashboard, or folder (including its subfolders</li>
+			</ul>
+			<li>Click the <span class="svgDetails">details icon</span> for that item and then click <strong>Export</strong> to open the <strong>Export Item</strong> dialog</li>
+			<li>In the <strong>Export Item</strong> dialog, click <strong>Download</strong> to download the JSON content to a file</li>
+			<ul>
+				<li>You can alternatively click <strong>Copy</strong> to copy the JSON content to the clipboard, but then you will have to paste that content into a file and save it</li>
+			</ul>
+		</ol>
+		<h2 class="instructionStep" onclick="toggleSiblingDisplay(this)"><span>▼</span> <span class="linkish">Import your JSON content file into this app</span></h2>
+		<ol>
+			<li>Click this button: <button onclick="chooseFiles();">Import Data</button></li>
+			<li>Select your file and click <strong>Open</strong></li>
+			<ul>
+				<li>All information is locally processed in the browser</li>
+			</ul>
+		</ol>
+		<h2 class="instructionStep" onclick="toggleSiblingDisplay(this)"><span>▼</span> <span class="linkish">Explore the configuration of your Sumo Logic item</span></h2>
+		<ul>
+			<li>
+				Click on the <span class="linkish" onclick="yam.click('yam_fields')">Field Summaries</span> button at the top of the window to see the hierarchical summaries of the JSON fields extracted from the item
+			</li>
+			<ul>
+				<li>An HTML or JSON <strong>Output Format</strong> can be selected</li>
+				<li>For the <strong>HTML Output</strong> only:</li>
+				<ul>
+					<li>The items can be filtered by type by selecting or deselecting the <strong>Output Filter</strong> checkboxes</li>
+					<li>The fields displayed item can be shown or hidden using the <strong>Expand All Items</strong> and <strong>Collapse All Items</strong> buttons, respectively</li>
+				</ul>
+			</ul>
+			<li>
+				Click on the <span class="linkish" onclick="yam.click('yam_queries')">Query Fields</span> button at the top of the window to see the hierarchy of the item along with its query and extracted JSON fields
+			</li>
+			<ul>
+				<li>An HTML or JSON <strong>Output Format</strong> can be selected</li>
+				<li>For the <strong>HTML Output</strong> only:</li>
+				<ul>
+					<li>The query displayed item can be shown or hidden using the <strong>Expand All Items</strong> and <strong>Collapse All Items</strong> buttons, respectively</li>
+				</ul>
+			</ul>
+		</ul>
+		<h2 class="instructionStep" onclick="toggleSiblingDisplay(this)"><span>▼</span> <span class="linkish">Check Log Message data against your Sumo Logic item</span></h2>
+		<ol>
+			<li>In the <strong>Message</strong> section:</li>
+			<ol>
+				<li>Click the <strong>Add Message</strong> button</li>
+				<li>Paste a copy of a JSON log message into the text box</li>
+				<ul>
+					<li>The border of the text box will be red if the log message fails a JSON syntax check</li>
+				</ul>
+				<li>If desired, repeat the previous 2 steps to add additional sample log messages</li>
+				<li>Select a log message by clicking its radio button</li>
+				<ul>
+					<li>A log message's radio button will be disabled until it passes a JSON syntax check, which is indicated by a black text box border</li>
+				</ul>
+			</ol>
+			<li>In the <strong>Items</strong> section:</li>
+			<ul>
+				<li>The items can be filtered by type by selecting or deselecting the <strong>Filter</strong> checkboxes</li>
+			</ul>
+			<li>In the <strong>Comparison</strong> section:</li>
+			<ul>
+				<li>The field comparison rows can be filtered by type by selecting or deselecting the <strong>Filter</strong> checkboxes</li>
+			</ul>
+		</ol>
+	</section>
+	<section id="fields" class="fieldsSection output"></section>
+	<section id="queries" class="queriesSection output"></section>
+	<section id="compares" class="comparesSection output"></section>
+	<section id="debug" class="debugSection" style="display:none"></section>
+</div>
+<div id="svgImages" style="display: none">
+	<svg id="svgLibrary" viewBox="0 -4 96 92" id="folder-open" xmlns="http:/* www.w3.org/2000/svg" fit="" height="1em" width="1em" preserveAspectRatio="xMidYMid meet" focusable="false">
+		<g>
+			<path d="M13.8,50.2c1.5-3.7,1.9-4.2,4.3-4.2H90V28c0-2.2-1.8-4-4-4H42v-4c0-4.4-3.6-8-8-8H14c-4.4,0-8,3.6-8,8v8v41.5L13.8,50.2z"></path>
+			<path d="M86,90H10c-2.2,0-4-1.8-4-4l12-30c1.4-3.5,1.8-4,4-4h70c2.2,0,4,1.8,4,4l-6,30C90,88.2,88.2,90,86,90z"></path>
+		</g>
+	</svg>
+	<svg id="svgPersonalFolder" viewBox="-6 -16 90 80" id="myfolder" xmlns="http:/* www.w3.org/2000/svg" fit="" height="1em" width="1em" preserveAspectRatio="xMidYMid meet" focusable="false">
+		<g id="myfolder-Layer_2" data-name="Layer 2">
+			<g id="myfolder-Layer_1-2" data-name="Layer 1">
+				<path d="M80,12H36V8a8,8,0,0,0-8-8H8A8,8,0,0,0,0,8V68a4,4,0,0,0,4,4H80a4,4,0,0,0,4-4V16A4,4,0,0,0,80,12ZM63,63H21.52a2,2,0,0,1-2-2.31C20.88,51.3,31.27,47,42.25,47S63.62,51.3,65,60.69A2,2,0,0,1,63,63ZM32.4,30.72A10.51,10.51,0,1,1,44.53,42.85,10.49,10.49,0,0,1,32.4,30.72Z"></path>
+			</g>
+		</g>
+	</svg>
+	<svg id="svgDetails" viewBox="0 -4 96 92" id="menu" xmlns="http:/* www.w3.org/2000/svg" fit="" height="1em" width="1em" preserveAspectRatio="xMidYMid meet" focusable="false">
+		<g>
+			<circle cx="48" cy="48" r="11"></circle>
+			<circle cx="48" cy="79" r="11"></circle>
+			<circle cx="48" cy="17" r="11"></circle>
+		</g>
+	</svg>
+</div>
+</body>
+</html>
