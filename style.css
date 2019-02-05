@@ -1,0 +1,56 @@
+:root {
+	--disabled_gray: #777777;
+	--link_blue: #0000EE;
+}
+body {font-family: arial; margin:0;}
+#yam {margin:0; padding: 0.5em;}
+#content {padding: 0.5em;}
+section {
+	overflow-x: scroll;
+}
+
+.instructionsSection h1:first-of-type {margin-top: 0}
+.instructionsSection h2 {cursor: pointer;}
+.instructionsSection h2 span:first-of-type {font-size: 90%; color: var(--disabled_gray); width: 1.5em; display: inline-block;}
+.instructionsSection ol ol {list-style-type: upper-alpha;}
+.linkish {cursor: pointer; color: var(--link_blue); text-decoration: underline;}
+
+.explorer {margin-top: 1em;}
+.explorer dl, .explorer ol, .explorer ul, .explorer pre {margin-top: 0; margin-bottom: 0;}
+.explorer > dl > dt:first-of-type {margin-top: 0;}
+.explorer dt {cursor: pointer; color: var(--link_blue); text-decoration: underline;}
+.explorer dt span {color: var(--disabled_gray); text-decoration: none; font-size: 90%}
+.explorer dt, .explorer dd {margin-top: 0.5em;}
+.explorer dt span {width:1.5em; display:inline-block;}
+.explorer dd.fields, .explorer dd.query {margin-inline-start: 0px;}
+.explorer dd.query ol {list-style-type:none;}
+.explorer pre {border: none;}
+#fields button, #queries button {margin-left: 1em;}
+.textarea {font-family: monospace; border-width: 1px; border-style: solid;}
+
+.htmlOutputControls {display: inline-flex; vertical-align: top;}
+
+#fields span.noLink {width: auto; ; font-size: 100%; color: black; text-decoration: none;}
+#fields div.fields_html_output label {font-weight: normal}
+
+.outputFormat span {font-weight: bold}
+.outputFormat input {margin-left: 1em}
+
+#compares > dl {margin-top: 0;}
+#compares > dl > dt {font-weight: bold}
+#compares > dl > dt > div {font-weight: normal; margin-left: 40px;}
+#compares > dl > dt > div > span {font-weight: bold;}
+
+#msgList dd {margin-top: 1em; margin-bottom: 1em;}
+#itemSelect, #fieldComp {margin-top: 1em; margin-bottom: 1em;}
+#fieldComp {border-collapse: collapse;}
+#fieldComp tr td {border: 1px solid black; padding: 0 0.5em; text-align: center;}
+#fieldComp tr:first-of-type td {font-weight: bold; background-color: lightgray}
+#fieldComp tr:hover {background-color: yellow;}
+#fieldComp tr td:last-of-type {text-align: left; font-family: monospace;}
+#fieldComp tr:first-of-type td:last-of-type {text-align: center; font-family: inherit;}
+
+button {border-radius: 6px; color: white; background-color: var(--link_blue)}
+button[disabled] {color: white; background-color: var(--disabled_gray)}
+button[disabled]:hover {cursor: auto}
+button:hover {cursor: pointer;}
